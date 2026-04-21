@@ -49,7 +49,3 @@ if st.button("Save Patient", key="save_patient"):
 # Display
 st.subheader("Patient List")
 st.dataframe(existing_data)
-creds = Credentials.from_service_account_file(
-    "hiv-health-system-app-7ffa50f21021.json",
-    scopes=scope
-)
