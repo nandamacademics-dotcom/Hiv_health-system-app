@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.env*
+# Streamlit secrets and credentials
+.streamlit/secrets.toml
+*.json
+# MacOS
+.DS_Store
