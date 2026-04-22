@@ -10,3 +10,7 @@ __pycache__/
 *.json
 # MacOS
 .DS_Store
+# Database files
+*.db
+*.sqlite
+*.sqlite3
