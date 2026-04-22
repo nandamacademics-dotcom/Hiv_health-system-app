@@ -1,28 +1,12 @@
 import streamlit as st
 import pandas as pd
-import gspread
-from google.oauth2.service_account import Credentials
+from utils.sheets_utils import get_testing_data, get_treatment_data
 
 st.title("Dashboard")
 
-# Connect to Google Sheets
-scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
-creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scope)
-client = gspread.authorize(creds)
-sheet = client.open_by_key("1kgbCBC0jzEsmMdyrCpw1uHtF33qhMGmwQRlSNrUau10")
-
 # Load data from Google Sheets
-testing_sheet = sheet.worksheet("HIV_Testing")
-testing_data = testing_sheet.get_all_records()
-testing = pd.DataFrame(testing_data)
-if not testing.empty:
-    testing.columns = testing.columns.str.strip()  # Remove whitespace from column names
-
-treatment_sheet = sheet.worksheet("Treatment")
-treatment_data = treatment_sheet.get_all_records()
-treatment = pd.DataFrame(treatment_data)
-if not treatment.empty:
-    treatment.columns = treatment.columns.str.strip()  # Remove whitespace from column names
+testing, _ = get_testing_data()
+treatment, _ = get_treatment_data()
 
 # Metrics
 st.metric("Total Tested", len(testing))

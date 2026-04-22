@@ -1,22 +1,11 @@
 import streamlit as st
 import pandas as pd
-import gspread
-from google.oauth2.service_account import Credentials
+from utils.sheets_utils import load_worksheet_data
 
 st.title("Patient Management")
 
-# Connect to Google Sheets
-scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
-
-creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scope)
-client = gspread.authorize(creds)
-
-sheet = client.open_by_key("1kgbCBC0jzEsmMdyrCpw1uHtF33qhMGmwQRlSNrUau10").worksheet("Patients")
-
 # Load data
-data = sheet.get_all_records()
-existing_data = pd.DataFrame(data)
-existing_data.columns = existing_data.columns.str.strip()  # Remove whitespace from column names
+existing_data, sheet = load_worksheet_data("Patients")
 
 # Inputs
 name = st.text_input("Name")

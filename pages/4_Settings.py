@@ -1,20 +1,11 @@
 import streamlit as st
 import pandas as pd
-import gspread
-from google.oauth2.service_account import Credentials
+from utils.sheets_utils import get_facilities_data
 
 st.title("Facilities")
 
-# Connect to Google Sheets
-scope = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
-creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scope)
-client = gspread.authorize(creds)
-sheet = client.open_by_key("1kgbCBC0jzEsmMdyrCpw1uHtF33qhMGmwQRlSNrUau10")
-
 # Load facilities data
-facilities_sheet = sheet.worksheet("Facilities")
-facilities_data = facilities_sheet.get_all_records()
-facilities_df = pd.DataFrame(facilities_data)
+facilities_df, facilities_sheet = get_facilities_data()
 
 name = st.text_input("Facility Name")
 township = st.text_input("Township")
