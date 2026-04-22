@@ -3,7 +3,7 @@ import pandas as pd
 from utils.sheets_utils import get_patients_data, get_testing_data
 from datetime import date
 
-st.title("HIV Testing")
+st.title("🧪 HIV Testing")
 
 # Load patients and testing data
 patients_df, _ = get_patients_data()

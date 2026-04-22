@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from utils.sheets_utils import get_testing_data, get_treatment_data
 
-st.title("Dashboard")
+st.title("📊 Dashboard")
 
 # Load data from Google Sheets
 testing, _ = get_testing_data()
