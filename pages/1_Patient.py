@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from utils.sheets_utils import load_worksheet_data
 
-st.title("👤 Patient Management")
+st.title("� Patient Management")
 
 # Load data
 existing_data, sheet = load_worksheet_data("Patients")

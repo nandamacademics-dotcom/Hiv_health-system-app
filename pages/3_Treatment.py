@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from utils.sheets_utils import get_patients_data, get_treatment_data
 
-st.title("💊 Treatment")
+st.title("💊 Treatment Tracking")
 
 # Load patients and treatment data
 patients_df, _ = get_patients_data()

@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from utils.sheets_utils import get_facilities_data
 
-st.title("⚙️ Facilities")
+st.title("🏥 Facilities")
 
 # Load facilities data
 facilities_df, facilities_sheet = get_facilities_data()
