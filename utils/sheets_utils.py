@@ -16,13 +16,36 @@ def get_google_sheets_client():
 def get_spreadsheet():
     """Get the main spreadsheet"""
     client = get_google_sheets_client()
-    return client.open_by_key(SPREADSHEET_ID)
+    try:
+        return client.open_by_key(SPREADSHEET_ID)
+    except gspread.SpreadsheetNotFound:
+        st.error(
+            "Google Sheet not found. Check that the spreadsheet ID is correct and that the service account has access."
+        )
+        raise
+    except gspread.exceptions.APIError:
+        st.error(
+            "Google Sheets API error. Make sure the service account credentials in Streamlit secrets are correct and the spreadsheet is shared with the service account email."
+        )
+        raise
 
 def load_worksheet_data(worksheet_name):
     """Load data from a worksheet and clean column names"""
     sheet = get_spreadsheet()
-    worksheet = sheet.worksheet(worksheet_name)
-    data = worksheet.get_all_records()
+    try:
+        worksheet = sheet.worksheet(worksheet_name)
+    except gspread.WorksheetNotFound:
+        st.error(
+            f"Worksheet '{worksheet_name}' was not found. Verify the tab name in your Google Sheet."
+        )
+        return pd.DataFrame(), None
+    try:
+        data = worksheet.get_all_records()
+    except gspread.exceptions.APIError:
+        st.error(
+            f"Failed to load worksheet '{worksheet_name}'. Check spreadsheet permissions and API access."
+        )
+        raise
     df = pd.DataFrame(data)
     if not df.empty:
         df.columns = df.columns.str.strip()  # Remove whitespace from column names
